@@ -1,7 +1,11 @@
 pipeline {
 
   agent any
-
+  
+  environment {
+    EXAMPLE_CREDS = credentials('tomcat')
+  }
+  
   tools {
     maven 'Maven'
   }
@@ -25,10 +29,9 @@ pipeline {
     
     stage('Deploy-to-Tomcat') {
       steps {
-          withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-              sh 'scp -o StrictHostKeyChecking=no target/*.war $USERNAME:$PASSWORD@198.168.1.7:/opt/tomcat/webapps/webapp.war'
-          }
-       }
+        sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat:${EXAMPLE_CREDS_PSW}@198.168.1.7:/opt/tomcat/webapps/webapp.war'
+      }
+      
     }
     
   }
