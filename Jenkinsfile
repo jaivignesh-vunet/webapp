@@ -25,11 +25,7 @@ pipeline {
     
     stage ('Deploy-to-Tomcat') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'tomcat', passwordVariable: 'tomcat')]) {
-          sshagent(['tomcat']) {
-            sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat@198.168.1.7:/opt/tomcat/webapps/webapp.war'
-          }
-        }
+            sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat:tomcat@198.168.1.7:/opt/tomcat/webapps/webapp.war'
       }
     }
     
