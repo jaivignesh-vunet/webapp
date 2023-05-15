@@ -27,13 +27,17 @@ pipeline {
       }
     }
     
-    stage ('Deploy-To-Tomcat') {
-      steps {
-        sshagent(['tomcat']) {
-           sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat@192.168.1.7:8080:/opt/tomcat/webapps/webapp.war'
-        }      
-      }       
+    stage('Deploy-to-Tomcat') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'tomcatUsername', passwordVariable: 'tomcatPassword')]) {
+            sh '''
+                scp -o StrictHostKeyChecking=no target/WebApp.war ${tomcatUsername}@198.168.1.7:/opt/tomcat/webapps/webapp.war
+                sshpass -p "${tomcatPassword}" ssh -o StrictHostKeyChecking=no ${tomcatUsername}@198.168.1.7 "sudo service tomcat restart"
+            '''
+        }
     }
+}
+
     
   }
 }
