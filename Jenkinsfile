@@ -31,7 +31,7 @@ pipeline {
     steps {
         withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'tomcatUsername', passwordVariable: 'tomcatPassword')]) {
             sh '''
-                scp -o StrictHostKeyChecking=no target/*WebApp.war ${tomcatUsername}@198.168.1.7:/opt/tomcat/webapps/webapp.war
+                scp -o StrictHostKeyChecking=no target/*.war ${tomcatUsername}@198.168.1.7:/opt/tomcat/webapps/webapp.war
             '''
         }
     }
