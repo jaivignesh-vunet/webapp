@@ -27,11 +27,12 @@ pipeline {
       }
     }
     
-    stage('Deploy-to-Tomcat') {
+    stage ('Deploy-To-Tomcat') {
       steps {
-        sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat:${EXAMPLE_CREDS_PSW}@198.168.1.7:/opt/tomcat/webapps/webapp.war'
-      }
-      
+        sshagent(['tomcat']) {
+           sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat@192.168.1.7:/opt/tomcat/webapps/webapp.war'
+        }      
+      }       
     }
     
   }
