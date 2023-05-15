@@ -23,10 +23,12 @@ pipeline {
       }
     }
     
-    stage ('Deploy-to-Tomcat') {
+    stage('Deploy-to-Tomcat') {
       steps {
-            sh 'scp -o StrictHostKeyChecking=no target/*.war tomcat:tomcat@198.168.1.7:/opt/tomcat/webapps/webapp.war'
-      }
+          withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+              sh 'scp -o StrictHostKeyChecking=no target/*.war $USERNAME:$PASSWORD@198.168.1.7:/opt/tomcat/webapps/webapp.war'
+          }
+       }
     }
     
   }
