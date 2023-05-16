@@ -29,7 +29,7 @@ pipeline {
     
     stage('Deploy-to-Tomcat') {
     steps {
-        sh 'sshpass -p 'tomcat' scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp/target/WebApp.war tomcat@192.168.8.137:/opt/tomcat/webapps/webapp.war'
+        sh "sshpass -p 'tomcat' scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp/target/WebApp.war tomcat@192.168.8.137:/opt/tomcat/webapps/webapp.war"
     }
 }
 
