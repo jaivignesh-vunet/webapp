@@ -31,7 +31,7 @@ pipeline {
     steps {
         withCredentials([usernamePassword(credentialsId: 'tomcat', usernameVariable: 'tomcatUsername', passwordVariable: 'tomcatPassword')]) {
             sh '''
-              sshpass -p "${tomcatPassword}" scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp/WebApp.war ${tomcatUsername}@198.168.8.137:/opt/tomcat/webapps/webapp.war
+              sshpass -p "${tomcatPassword}" scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp/target/WebApp.war ${tomcatUsername}@198.168.8.137:/opt/tomcat/webapps/webapp.war
             '''
         }
     }
